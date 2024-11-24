@@ -22,10 +22,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
+/**
+ * La actividad principal que inicia la aplicación y configura el contenido de la pantalla.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,22 +41,32 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Vista previa del diseño en herramientas de desarrollo (Android Studio).
+ * Permite ver la interfaz de usuario sin ejecutar la aplicación.
+ */
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
     MainContent()
 }
 
+/**
+ * Componente principal que define el diseño de la pantalla.
+ * Incluye un título, un conjunto de checkboxes, un botón y un switch.
+ */
 @Composable
 fun MainContent() {
-    var isButtonEnabled by remember { mutableStateOf(true) }
-    var isShowButtonPressed by remember { mutableStateOf(false) }
-    var selectedObjective by remember { mutableStateOf("") }
+    var isButtonEnabled by remember { mutableStateOf(true) }    // Estado del switch
+    var isShowButtonPressed by remember { mutableStateOf(false) }   // Estado del botón
+    var selectedObjective by remember { mutableStateOf("") }    // Objetivo seleccionado
 
+    // Estados
     var isChecked1 by remember { mutableStateOf(false) }
     var isChecked2 by remember { mutableStateOf(false) }
     var isChecked3 by remember { mutableStateOf(false) }
 
+    // Mapa que asocia el estado y las checkboxes
     val stateObjectives = mapOf(
         1 to isChecked1,
         2 to isChecked2,
@@ -77,7 +92,7 @@ fun MainContent() {
                 color = Color.White,
                 modifier = Modifier
                     .padding(vertical = 16.dp),
-                style = androidx.compose.ui.text.TextStyle(
+                style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.White
                 )
@@ -142,6 +157,11 @@ fun MainContent() {
     }
 }
 
+/**
+ * Caja de texto estilizada que muestra el texto proporcionado.
+ *
+ * @param text El texto que se mostrará en la caja.
+ */
 @Composable
 fun TextBox(text: String) {
     Box(
@@ -159,6 +179,13 @@ fun TextBox(text: String) {
     }
 }
 
+/**
+ * Botón para mostrar el objetivo más bajo y un switch para habilitar o deshabilitar el botón.
+ *
+ * @param isButtonEnabled Indica si el botón está habilitado.
+ * @param onSwitchToggle Acción que se ejecuta al cambiar el estado del switch.
+ * @param onButtonClick Acción que se ejecuta al presionar el botón.
+ */
 @Composable
 fun ButtonAndSwitch(
     isButtonEnabled: Boolean,
@@ -194,6 +221,13 @@ fun ButtonAndSwitch(
     }
 }
 
+/**
+ * Checkbox estilizado con una etiqueta.
+ *
+ * @param checked Estado del checkbox.
+ * @param onCheckedChange Acción a realizar cuando cambia el estado.
+ * @param label Etiqueta asociada al checkbox.
+ */
 @Composable
 fun CheckBox(
     checked: Boolean,
@@ -223,8 +257,13 @@ fun CheckBox(
     }
 }
 
+/**
+ * Obtiene el objetivo más bajo entre los seleccionados.
+ *
+ * @param stateObjectives Mapa que contiene los objetivos y su estado (seleccionado o no).
+ * @return El texto que representa el objetivo más bajo seleccionado, o un mensaje indicando que no hay objetivos seleccionados.
+ */
 fun getLowestObjective(stateObjectives: Map<Int, Boolean>): String {
-
     var lowestObjetive: Int? = null
 
     for ((key, value) in stateObjectives) {
